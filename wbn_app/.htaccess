@@ -1,0 +1,2 @@
+# Bu klasör web üzerinden erişilmemelidir (public_html dışında tutun).
+Require all denied

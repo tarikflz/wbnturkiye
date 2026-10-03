@@ -1,0 +1,57 @@
+Options -Indexes -MultiViews
+DirectoryIndex index.php
+AddDefaultCharset UTF-8
+ErrorDocument 404 /404.php
+
+RewriteEngine On
+
+# HTTPS'e yönlendir (yerel geliştirme hariç)
+RewriteCond %{HTTPS} !=on
+RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1)(:\d+)?$
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+# Gizli dosyalar ve iç dosyalar dışarıya kapalı
+RewriteRule (^|/)\. - [F]
+RewriteRule ^_app\.php$ - [F]
+
+# Eski .html adresleri -> yeni adresler
+RewriteRule "^index\.html$" / [R=301,L]
+RewriteRule "^Hakkımızda\.html$" /hakkimizda [R=301,L,NE]
+RewriteRule "^Kimler Katılabilir\.html$" /kimler-katilabilir [R=301,L,NE]
+RewriteRule "^KVKK Sayfası\.html$" /kvkk [R=301,L,NE]
+RewriteRule "^Yeni Üye Başvuru Formu\.html$" /uyelik-basvurusu [R=301,L,NE]
+RewriteRule "^Üye Bilgi Güncelleme Formu\.html$" /uye-bilgi-guncelleme [R=301,L,NE]
+RewriteRule "^Kurumsal Üyelik Başvuru Formu\.html$" /kurumsal-uyelik [R=301,L,NE]
+RewriteRule "^Dekont Gönderme Formu\.html$" /dekont-gonder [R=301,L,NE]
+RewriteRule "^Yönetim Paneli\.html$" /yonetim/ [R=301,L,NE]
+RewriteRule "^Footer Ana Sayfa\.html$" / [R=301,L,NE]
+
+# /sayfa.php -> /sayfa (yalnızca tarayıcıdan gelen istekler, kök dizindeki sayfalar)
+RewriteCond %{THE_REQUEST} \s/index\.php[\s?]
+RewriteRule ^ / [R=301,L]
+RewriteCond %{THE_REQUEST} \s/([a-z0-9-]+)\.php[\s?]
+RewriteRule ^ /%1 [R=301,L]
+
+# API: /api/* -> api/index.php
+RewriteRule ^api(/.*)?$ api/index.php [L,QSA]
+
+# Uzantısız adresler: /hakkimizda -> hakkimizda.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^([a-z0-9-]+)/?$ $1.php [L]
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+</IfModule>

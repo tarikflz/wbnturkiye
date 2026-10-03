@@ -1,0 +1,6 @@
+.DS_Store
+wbn_app/config.php
+wbn_app/storage/receipts/*
+!wbn_app/storage/receipts/.gitkeep
+wbn_app/storage/logs/*
+!wbn_app/storage/logs/.gitkeep
