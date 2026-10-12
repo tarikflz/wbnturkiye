@@ -683,3 +683,16 @@
 .sidebar-user{margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,.1);font-size:13px;color:rgba(255,255,255,.7)}
 .sidebar-user strong{display:block;color:#fff;font-size:14px}
 .logout-link{display:inline-block;margin-top:8px;color:var(--purple-200);font-weight:700;text-decoration:underline}
+
+/* Aktif menü sekmesi (PHP sürümünde eklendi): tüm sekmeler sönük, tıklanan vurgulu */
+.nav-item,
+.nav-item-secondary{
+  background:rgba(255,255,255,.045);
+}
+.nav-item.is-active{
+  background:linear-gradient(90deg,rgba(255,255,255,.18),rgba(255,255,255,.08));
+  box-shadow:inset 3px 0 0 var(--purple-300);
+}
+.nav-item.is-active .nav-icon{
+  background:rgba(255,255,255,.2);
+}

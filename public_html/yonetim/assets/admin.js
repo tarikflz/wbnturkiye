@@ -999,6 +999,19 @@ updateSearchInput.addEventListener("input",renderUpdateRows);
 receiptSearchInput.addEventListener("input",renderReceiptRows);
 corporateSearchInput.addEventListener("input", renderCorporateRows);
 
+// Menüde açık olan sekmeyi vurgula
+const navTabs = ["applicationsTab", "updatesTab", "receiptsTab", "corporateTab"];
+function setActiveTab(activeId){
+  navTabs.forEach(id => {
+    const tab = document.getElementById(id);
+    tab.classList.toggle("is-active", id === activeId);
+    if(id === activeId) tab.setAttribute("aria-current", "page");
+    else tab.removeAttribute("aria-current");
+  });
+}
+navTabs.forEach(id => document.getElementById(id).addEventListener("click", () => setActiveTab(id)));
+setActiveTab("applicationsTab");
+
 initMailEditors();
 loadAll();
 })();
