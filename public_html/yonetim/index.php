@@ -17,7 +17,9 @@ header('X-Robots-Tag: noindex, nofollow');
   <meta name="robots" content="noindex, nofollow">
   <meta name="csrf-token" content="<?= e(csrf_token()) ?>">
   <title>WBN Türkiye | Yönetim Paneli</title>
-  <link rel="icon" type="image/png" href="<?= e(asset('img/wbn-logo.png')) ?>">
+  <link rel="icon" type="image/svg+xml" href="<?= e(asset('img/favicon.svg')) ?>">
+  <link rel="icon" type="image/png" sizes="512x512" href="<?= e(asset('img/favicon.png')) ?>">
+  <link rel="apple-touch-icon" href="<?= e(asset('img/favicon.png')) ?>">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -416,9 +418,7 @@ header('X-Robots-Tag: noindex, nofollow');
               <div class="mail-content">
                 <p><strong id="corporateApproveEmailName" data-mail-editable="true">Merhaba,</strong></p>
                 <p data-mail-editable="true">WBN Türkiye Kurumsal Üyelik Başvurunuz değerlendirilmiş ve başvurunuz onaylanmıştır.</p>
-                <p data-mail-editable="true">Topluluğumuza hoş geldiniz. Kurumsal üyelik sürecinizi tamamlamak için üyelik bağışınızı TEV “WBN Türkiye Geleceğin Arıları” burs fonuna gerçekleştirebilirsiniz.</p>
-                <a class="donation-preview" href="https://bagis.tev.org.tr/burs-fonu-bagisi?q=67532&k=46004" target="_blank" rel="noopener noreferrer">Bağış Yap</a>
-                <p class="receipt-mail-note" data-mail-editable="true">Bağış yaptıktan sonra; Bağış Dekontunu <span class="placeholder-link">Dekont Gönderme Formu</span> linki tıklayarak yüklemenizi ve göndermenizi rica ederiz.</p>
+                <p data-mail-editable="true">Topluluğumuza hoş geldiniz.</p>
               </div>
             </div>
 
@@ -497,9 +497,7 @@ header('X-Robots-Tag: noindex, nofollow');
               <div class="mail-content">
                 <p><strong id="emailPreviewName" data-mail-editable="true">Merhaba,</strong></p>
                 <p data-mail-editable="true">WBN Türkiye Yeni Üye Başvurunuz değerlendirilmiş ve üyeliğiniz onaylanmıştır.</p>
-                <p data-mail-editable="true">Topluluğumuza hoş geldiniz. Üyelik sürecinizi tamamlamak için üyelik bağışınızı TEV “WBN Türkiye Geleceğin Arıları” burs fonuna gerçekleştirebilirsiniz.</p>
-                <a class="donation-preview" href="https://bagis.tev.org.tr/burs-fonu-bagisi?q=67532&k=46004" target="_blank" rel="noopener noreferrer">Bağış Yap</a>
-                <p class="receipt-mail-note" data-mail-editable="true">Bağış yaptıktan sonra; Bağış Dekontunu <span class="placeholder-link">Dekont Gönderme Formu</span> linki tıklayarak yüklemenizi ve göndermenizi rica ederiz.</p>
+                <p data-mail-editable="true">Topluluğumuza hoş geldiniz.</p>
               </div>
             </div>
 

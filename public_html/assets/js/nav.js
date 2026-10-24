@@ -22,3 +22,21 @@
     if (mq.matches) setOpen(false);
   });
 })();
+
+// Alt menü: dokunmatik cihazlarda üst başlığa tıklayınca açılır
+(function () {
+  const parents = document.querySelectorAll('.site-nav__parent');
+  parents.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      const item = btn.closest('.site-nav__item');
+      const open = !item.classList.contains('is-open');
+      document.querySelectorAll('.site-nav__item.is-open').forEach(function (el) { el.classList.remove('is-open'); });
+      item.classList.toggle('is-open', open);
+      btn.setAttribute('aria-expanded', String(open));
+    });
+  });
+  document.addEventListener('click', function (event) {
+    if (event.target.closest('.site-nav__item')) return;
+    document.querySelectorAll('.site-nav__item.is-open').forEach(function (el) { el.classList.remove('is-open'); });
+  });
+})();

@@ -59,8 +59,8 @@ layout_start([
               </div>
 
               <div class="field">
-                <label class="required" for="registryNo">Ticaret Odası Sicil Numarası</label>
-                <input id="registryNo" name="registry_no" type="text" required>
+                <label for="registryNo">Ticaret Odası Sicil Numarası</label>
+                <input id="registryNo" name="registry_no" type="text" placeholder="İsteğe bağlı">
               </div>
 
               <div class="field">

@@ -11,8 +11,29 @@
 
     <nav class="site-nav" id="siteNav" aria-label="Ana menü">
       <ul>
-<?php foreach (NAV_ITEMS as $key => [$href, $label]): ?>
-        <li><a href="<?= e($href) ?>"<?= $key === $active ? ' class="is-active" aria-current="page"' : '' ?>><?= e($label) ?></a></li>
+<?php foreach (NAV_ITEMS as $key => [$href, $label, $children]): ?>
+<?php
+    $childActive = isset($children[$active]);
+    $isActive = $key === $active || $childActive;
+?>
+        <li class="site-nav__item<?= $children ? ' has-sub' : '' ?>">
+<?php if ($href !== null): ?>
+          <a href="<?= e($href) ?>"<?= $isActive ? ' class="is-active"' : '' ?><?= $key === $active ? ' aria-current="page"' : '' ?>><?= e($label) ?></a>
+<?php else: ?>
+          <button type="button" class="site-nav__parent<?= $isActive ? ' is-active' : '' ?>" aria-expanded="false"><?= e($label) ?></button>
+<?php endif; ?>
+<?php if ($children): ?>
+          <ul class="site-nav__sub">
+<?php foreach ($children as $childKey => [$childHref, $childLabel]): ?>
+<?php if ($childHref !== null): ?>
+            <li><a href="<?= e($childHref) ?>"<?= $childKey === $active ? ' class="is-active" aria-current="page"' : '' ?>><?= e($childLabel) ?></a></li>
+<?php else: ?>
+            <li><span class="is-disabled" aria-disabled="true"><?= e($childLabel) ?></span></li>
+<?php endif; ?>
+<?php endforeach; ?>
+          </ul>
+<?php endif; ?>
+        </li>
 <?php endforeach; ?>
       </ul>
     </nav>

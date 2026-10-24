@@ -135,6 +135,33 @@ layout_start([
     </div>
   </section>
 
+  <section class="partners-section" id="is-birlikleri">
+    <div class="container">
+      <p class="section-kicker">İş Birliklerimiz</p>
+      <ul class="partners-list">
+<?php
+// Soldan sağa sıra önemlidir. Logo dosyası henüz yüklenmediyse firma adı yazı olarak gösterilir.
+$partners = [
+    ['Inspira7', 'https://inspira7.com/', '1_inspira7.png'],
+    ['Odarama', 'https://odarama.com/', '2_odarama.png'],
+    ['Nodyo', 'https://nodyo.co/', '3_nodyo.png'],
+];
+foreach ($partners as [$name, $link, $logo]):
+?>
+        <li>
+          <a class="partner-link" href="<?= e($link) ?>" target="_blank" rel="noopener noreferrer" aria-label="<?= e($name) ?>">
+<?php if (is_file(PUBLIC_DIR . '/assets/img/' . $logo)): ?>
+            <img src="<?= e(asset('img/' . $logo)) ?>" alt="<?= e($name) ?> logosu" loading="lazy">
+<?php else: ?>
+            <span><?= e($name) ?></span>
+<?php endif; ?>
+          </a>
+        </li>
+<?php endforeach; ?>
+      </ul>
+    </div>
+  </section>
+
   <section class="contact-section" id="topluluk-formu">
     <div class="container contact-grid">
       <div class="contact-intro">

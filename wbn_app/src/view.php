@@ -1,12 +1,26 @@
 <?php
 declare(strict_types=1);
 
+// Menü ağacı: [anahtar => [href, etiket, alt öğeler]]. href null ise öğe tıklanamaz.
+// Alt öğeler [anahtar => [href, etiket]] biçimindedir; href null olanlar henüz sayfası olmayan başlıklardır.
 const NAV_ITEMS = [
-    'hakkimizda' => ['/hakkimizda', 'Hakkımızda'],
-    'kimler-katilabilir' => ['/kimler-katilabilir', 'Kimler Katılabilir'],
-    'kurumsal-uyelik' => ['/kurumsal-uyelik', 'Kurumsal Üyelik Başvurusu'],
-    'uyelik-basvurusu' => ['/uyelik-basvurusu', 'Yeni Üye Başvurusu'],
-    'uye-bilgi-guncelleme' => ['/uye-bilgi-guncelleme', 'Üye Bilgi Güncelleme Formu'],
+    'hakkimizda' => ['/hakkimizda', 'Hakkımızda', [
+        'kurucularimiz' => [null, 'Kurucularımız'],
+        'icra-kurulu' => [null, 'İcra Kurulumuz'],
+    ]],
+    'uyelik' => [null, 'Üyelik', [
+        'kimler-katilabilir' => ['/kimler-katilabilir', 'Kimler Katılabilir?'],
+        'uyelik-basvurusu' => ['/uyelik-basvurusu', 'Yeni Üye Başvurusu'],
+        'kurumsal-uyelik' => ['/kurumsal-uyelik', 'Kurumsal Üyelik Başvurusu'],
+        'uye-bilgi-guncelleme' => ['/uye-bilgi-guncelleme', 'Üye Bilgi Güncelleme Formu'],
+    ]],
+    'etkinlikler' => [null, 'Etkinlikler', [
+        'yaklasan-etkinlikler' => [null, 'Yaklaşan Etkinlikler'],
+        'gecmis-etkinlikler' => [null, 'Geçmiş Etkinlikler'],
+    ]],
+    'is-birlikleri' => [null, 'İş Birliklerimiz', [
+        'wbn-ayricaliklari' => [null, 'WBN Ayrıcalıkları'],
+    ]],
 ];
 
 function e(?string $value): string

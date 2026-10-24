@@ -173,9 +173,7 @@ function default_decision_html(string $type, string $decision, string $name): st
     return sanitize_mail_html(
         '<p><strong>Merhaba ' . e($name) . ',</strong></p>'
         . "<p>WBN Türkiye $label değerlendirilmiş ve başvurunuz onaylanmıştır.</p>"
-        . '<p>Topluluğumuza hoş geldiniz. Üyelik sürecinizi tamamlamak için üyelik bağışınızı TEV “WBN Türkiye Geleceğin Arıları” burs fonuna gerçekleştirebilirsiniz.</p>'
-        . '<a class="donation-preview" href="' . e(config('links.tev_donation')) . '">Bağış Yap</a>'
-        . '<p class="receipt-mail-note">Bağış yaptıktan sonra; Bağış Dekontunu <span class="placeholder-link">....</span> linki tıklayarak yüklemenizi ve göndermenizi rica ederiz.</p>'
+        . '<p>Topluluğumuza hoş geldiniz.</p>'
     );
 }
 

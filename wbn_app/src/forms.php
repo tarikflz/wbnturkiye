@@ -146,7 +146,7 @@ function handle_corporate_application(array $input): array
     guard_public_form($input);
     $d = validate($input, [
         'company_title' => ['required', 'max:190'],
-        'registry_no' => ['required', 'max:60'],
+        'registry_no' => ['max:60'],
         'website' => ['required', 'url', 'max:300'],
         'applicant_name' => ['required', 'max:150'],
         'applicant_title' => ['required', 'max:150'],

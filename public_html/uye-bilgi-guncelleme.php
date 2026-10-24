@@ -170,14 +170,6 @@ layout_start([
             <textarea id="ekBilgi" name="extra_info" placeholder="İsteğe bağlı"></textarea>
           </div>
 
-          <div class="tev-note">
-            Yıllık üyelik bağışınızı TEV “WBN Türkiye Geleceğin Arıları” burs fonuna yatırmak için ilgili WBN Türkiye bağış bağlantısını kullanabilirsiniz.
-            <br>
-            <a class="donation-button"
-               href="https://bagis.tev.org.tr/burs-fonu-bagisi?q=67532&k=46004"
-               target="_blank"
-               rel="noopener noreferrer">Bağış Yap</a>
-          </div>
         </div>
 
         <div class="submit-area">

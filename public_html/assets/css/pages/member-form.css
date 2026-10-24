@@ -366,39 +366,6 @@ input:focus, select:focus, textarea:focus {
   font-size: 12px;
   text-align: center;
 }
-.tev-note {
-  margin-top: 22px;
-  padding: 18px 20px;
-  border-radius: 16px;
-  background: linear-gradient(135deg, #f7effb, #fff);
-  border: 1px solid #eadbf1;
-  color: var(--purple-900);
-  font-size: 14px;
-}
-
-.donation-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 140px;
-  min-height: 46px;
-  margin-top: 16px;
-  padding: 0 24px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, #68278F 0%, #A159CD 100%);
-  color: #FFFFFF;
-  font-size: 14px;
-  font-weight: 700;
-  text-decoration: none;
-  box-shadow: 0 10px 24px rgba(104,39,143,.18);
-  transition: transform .2s ease, box-shadow .2s ease;
-}
-
-.donation-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 14px 28px rgba(104,39,143,.25);
-}
-
 @media (max-width: 960px) {
   .hero-grid, .form-shell { grid-template-columns: 1fr; }
   .hero-grid { gap: 34px; }
