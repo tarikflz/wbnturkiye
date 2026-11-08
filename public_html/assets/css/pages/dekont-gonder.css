@@ -270,7 +270,7 @@ input:focus {
 .upload-box span {
   display:block;
   color:var(--muted);
-  font-size:12px;
+  font-size:13px;
 }
 
 .upload-box input[type="file"] {
@@ -289,7 +289,7 @@ input:focus {
   border-radius:10px;
   background:var(--purple-100);
   color:var(--purple-800);
-  font-size:12px;
+  font-size:13px;
   font-weight:600;
 }
 
@@ -320,7 +320,7 @@ input:focus {
 .form-note {
   margin:14px 0 0;
   color:var(--muted);
-  font-size:11px;
+  font-size:13px;
   text-align:center;
 }
 
@@ -367,7 +367,7 @@ input:focus {
   border-radius:11px;
   background:#FFF0F2;
   color:#A93845;
-  font-size:12px;
+  font-size:13px;
 }
 
 @media(max-width:900px) {

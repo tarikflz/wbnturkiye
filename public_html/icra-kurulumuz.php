@@ -3,7 +3,7 @@ require __DIR__ . '/_app.php';
 
 layout_start([
     'title' => 'WBN Türkiye | İcra Kurulumuz',
-    'description' => 'WBN Türkiye İcra Kurulu 2026 üyeleri.',
+    'description' => 'WBN Türkiye İcra Kurulu 2026: eş başkanlar, kurul üyeleri ve kurucu ortaklarımızla topluluğu birlikte yöneten kadın liderler.',
     'css' => ['pages/ekip'],
     'active' => 'icra-kurulu',
 ]);
@@ -19,7 +19,7 @@ $members = [
     ['Tulin Çakmak', 'WBN Kurucu Ortağı - NovaForm Danışmanlık Kurucusu', 'https://www.linkedin.com/in/tulincakmak/', 'tulin-cakmak.jpg', 'leader-card--founder'],
 ];
 ?>
-<main>
+<main id="main" tabindex="-1">
   <section class="board-hero" data-year="2026">
     <div class="container">
       <div class="board-eyebrow">WBN Türkiye</div>

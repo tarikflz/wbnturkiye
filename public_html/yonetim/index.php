@@ -17,8 +17,7 @@ header('X-Robots-Tag: noindex, nofollow');
   <meta name="robots" content="noindex, nofollow">
   <meta name="csrf-token" content="<?= e(csrf_token()) ?>">
   <title>WBN Türkiye | Yönetim Paneli</title>
-  <link rel="icon" type="image/svg+xml" href="<?= e(asset('img/favicon.svg')) ?>">
-  <link rel="icon" type="image/png" sizes="512x512" href="<?= e(asset('img/favicon.png')) ?>">
+  <link rel="icon" type="image/png" sizes="48x48" href="<?= e(asset('img/favicon-48.png')) ?>">
   <link rel="apple-touch-icon" href="<?= e(asset('img/favicon.png')) ?>">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -139,6 +138,7 @@ header('X-Robots-Tag: noindex, nofollow');
                 <th>Ünvanı</th>
                 <th>E-posta Adresi</th>
                 <th>Durum</th>
+                <th>Karar Tarihi</th>
                 <th></th>
               </tr>
             </thead>
@@ -352,6 +352,7 @@ header('X-Robots-Tag: noindex, nofollow');
                 <th>Ünvanı</th>
                 <th>E-posta Adresi</th>
                 <th>Durum</th>
+                <th>Karar Tarihi</th>
                 <th></th>
               </tr>
             </thead>

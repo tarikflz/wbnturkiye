@@ -183,7 +183,7 @@ h1 {
   border-radius: 50%;
   background: var(--purple-100);
   color: var(--purple-800);
-  font-size: 12px;
+  font-size:13px;
 }
 
 .form-card {
@@ -363,7 +363,7 @@ input:focus, select:focus, textarea:focus {
   margin: 14px auto 0;
   max-width: 720px;
   color: var(--muted);
-  font-size: 12px;
+  font-size:13px;
   text-align: center;
 }
 @media (max-width: 960px) {

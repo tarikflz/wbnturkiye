@@ -8,9 +8,21 @@ layout_start([
     'js' => ['forms'],
     'active' => 'home',
     'fonts' => ['cormorant'],
+    'schema' => [
+        '@context' => 'https://schema.org',
+        '@type' => 'Organization',
+        'name' => 'WBN Türkiye',
+        'url' => url('/'),
+        'logo' => url('/assets/img/wbn-logo.png'),
+        'description' => 'Türkiye\'nin finans ve teknoloji başta olmak üzere tüm sektörlerden kadın liderleri buluşturan etkileşim platformu.',
+        'sameAs' => [
+            'https://www.linkedin.com/company/wbn-turkiye/',
+            'https://www.instagram.com/wbuzznetwork/',
+        ],
+    ],
 ]);
 ?>
-<main>
+<main id="main" tabindex="-1">
   <section class="hero" id="anasayfa">
     <div class="container">
       <div class="hero-content">
@@ -132,33 +144,6 @@ layout_start([
           ve liderliğin çoğaldığı bir gelecek için birlikte çalışıyoruz.
         </p>
       </div>
-    </div>
-  </section>
-
-  <section class="partners-section" id="is-birlikleri">
-    <div class="container">
-      <p class="section-kicker">İş Birliklerimiz</p>
-      <ul class="partners-list">
-<?php
-// Soldan sağa sıra önemlidir. Logo dosyası henüz yüklenmediyse firma adı yazı olarak gösterilir.
-$partners = [
-    ['Inspira7', 'https://inspira7.com/', '1_inspira7.png'],
-    ['Odarama', 'https://odarama.com/', '2_odarama.png'],
-    ['Nodyo', 'https://nodyo.co/', '3_nodyo.png'],
-];
-foreach ($partners as [$name, $link, $logo]):
-?>
-        <li>
-          <a class="partner-link" href="<?= e($link) ?>" target="_blank" rel="noopener noreferrer" aria-label="<?= e($name) ?>">
-<?php if (is_file(PUBLIC_DIR . '/assets/img/' . $logo)): ?>
-            <img src="<?= e(asset('img/' . $logo)) ?>" alt="<?= e($name) ?> logosu" loading="lazy">
-<?php else: ?>
-            <span><?= e($name) ?></span>
-<?php endif; ?>
-          </a>
-        </li>
-<?php endforeach; ?>
-      </ul>
     </div>
   </section>
 

@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /yonetim/
+
+Sitemap: https://wbnturkiye.com/sitemap.xml

@@ -17,7 +17,7 @@ function decode_list(?string $json): array
 
 function list_applications(): array
 {
-    $rows = db()->query('SELECT * FROM applications ORDER BY created_at DESC, id DESC')->fetchAll();
+    $rows = db()->query('SELECT * FROM applications WHERE deleted_at IS NULL ORDER BY created_at DESC, id DESC')->fetchAll();
     return array_map(fn ($r) => [
         'id' => $r['ref'],
         'created_at' => iso_date($r['created_at']),
@@ -39,12 +39,14 @@ function list_applications(): array
         'extra_info' => (string) $r['extra_info'],
         'status' => $r['status'],
         'email_status' => $r['email_status'],
+        'decided_at' => iso_date($r['decided_at']),
+        'decided_by' => $r['decided_by'],
     ], $rows);
 }
 
 function list_member_updates(): array
 {
-    $rows = db()->query('SELECT * FROM member_updates ORDER BY updated_at DESC, id DESC')->fetchAll();
+    $rows = db()->query('SELECT * FROM member_updates WHERE deleted_at IS NULL ORDER BY updated_at DESC, id DESC')->fetchAll();
     return array_map(fn ($r) => [
         'id' => $r['ref'],
         'updated_at' => iso_date($r['updated_at']),
@@ -69,7 +71,7 @@ function list_member_updates(): array
 
 function list_corporate_applications(): array
 {
-    $rows = db()->query('SELECT * FROM corporate_applications ORDER BY created_at DESC, id DESC')->fetchAll();
+    $rows = db()->query('SELECT * FROM corporate_applications WHERE deleted_at IS NULL ORDER BY created_at DESC, id DESC')->fetchAll();
     return array_map(fn ($r) => [
         'id' => $r['ref'],
         'created_at' => iso_date($r['created_at']),
@@ -82,12 +84,14 @@ function list_corporate_applications(): array
         'email' => $r['email'],
         'status' => $r['status'],
         'email_status' => $r['email_status'],
+        'decided_at' => iso_date($r['decided_at']),
+        'decided_by' => $r['decided_by'],
     ], $rows);
 }
 
 function list_receipts(): array
 {
-    $rows = db()->query('SELECT * FROM receipts ORDER BY submitted_at DESC, id DESC')->fetchAll();
+    $rows = db()->query('SELECT * FROM receipts WHERE deleted_at IS NULL ORDER BY submitted_at DESC, id DESC')->fetchAll();
     return array_map(fn ($r) => [
         'id' => $r['ref'],
         'submitted_at' => iso_date($r['submitted_at']),
@@ -103,9 +107,33 @@ function list_receipts(): array
     ], $rows);
 }
 
+/**
+ * Kaydı siler (soft delete): satır ve dekont dosyası saklanır, yalnızca listelerden gizlenir.
+ * $kind: 'applications' | 'member-updates' | 'corporate-applications' | 'receipts'
+ */
+function soft_delete_record(string $kind, string $ref): array
+{
+    $table = [
+        'applications' => 'applications',
+        'member-updates' => 'member_updates',
+        'corporate-applications' => 'corporate_applications',
+        'receipts' => 'receipts',
+    ][$kind] ?? null;
+    if ($table === null) {
+        throw new HttpError(404, 'Bulunamadı.');
+    }
+
+    $stmt = db()->prepare("UPDATE $table SET deleted_at = NOW(), deleted_by = ? WHERE ref = ? AND deleted_at IS NULL");
+    $stmt->execute([current_admin(), $ref]);
+    if ($stmt->rowCount() === 0) {
+        throw new HttpError(404, 'Kayıt bulunamadı.');
+    }
+    return ['ok' => true, 'id' => $ref];
+}
+
 function stream_receipt_file(string $ref, bool $download): never
 {
-    $stmt = db()->prepare('SELECT receipt_name, receipt_mime, stored_name FROM receipts WHERE ref = ?');
+    $stmt = db()->prepare('SELECT receipt_name, receipt_mime, stored_name FROM receipts WHERE ref = ? AND deleted_at IS NULL');
     $stmt->execute([$ref]);
     $r = $stmt->fetch();
     $path = $r ? STORAGE_DIR . '/receipts/' . $r['stored_name'] : null;
@@ -135,7 +163,7 @@ function stream_receipt_file(string $ref, bool $download): never
 function decide_application(string $type, string $ref, string $decision, string $emailHtml): array
 {
     $table = $type === 'corporate' ? 'corporate_applications' : 'applications';
-    $stmt = db()->prepare("SELECT * FROM $table WHERE ref = ?");
+    $stmt = db()->prepare("SELECT * FROM $table WHERE ref = ? AND deleted_at IS NULL");
     $stmt->execute([$ref]);
     $app = $stmt->fetch();
     if (!$app) {
@@ -159,7 +187,16 @@ function decide_application(string $type, string $ref, string $decision, string 
     db()->prepare("UPDATE $table SET status = ?, email_status = ?, decided_at = NOW(), decided_by = ? WHERE id = ?")
         ->execute([$decision, $sent ? 'sent' : 'error', current_admin(), $app['id']]);
 
-    return ['id' => $ref, 'status' => $decision, 'email_status' => $sent ? 'sent' : 'error'];
+    $stmt = db()->prepare("SELECT decided_at FROM $table WHERE id = ?");
+    $stmt->execute([$app['id']]);
+
+    return [
+        'id' => $ref,
+        'status' => $decision,
+        'email_status' => $sent ? 'sent' : 'error',
+        'decided_at' => iso_date($stmt->fetchColumn() ?: null),
+        'decided_by' => current_admin(),
+    ];
 }
 
 function default_decision_html(string $type, string $decision, string $name): string

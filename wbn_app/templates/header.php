@@ -1,4 +1,5 @@
 <?php $active = $GLOBALS['page']['active'] ?? ''; ?>
+<a class="skip-link" href="#main">İçeriğe geç</a>
 <header class="site-header">
   <div class="container site-header__inner">
     <a class="site-header__logo" href="/" aria-label="WBN Türkiye ana sayfa">

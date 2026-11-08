@@ -4,7 +4,7 @@
     <p class="lead">
       Güçlü bağlar kurmak, deneyimlerinizi paylaşmak ve geleceğin kadın liderlerine birlikte değer katmak için sizi de WBN Türkiye topluluğuna bekliyoruz.
     </p>
-    <img class="footer-logo" src="<?= e(asset('img/wbn-logo.png')) ?>" alt="WBN Türkiye logosu">
+    <img class="footer-logo" src="<?= e(asset('img/wbn-logo.png')) ?>" alt="WBN Türkiye logosu" width="164" height="76" loading="lazy">
   </div>
 
   <div class="container footer-social-only">
@@ -38,7 +38,7 @@
     <div class="container footer-support-inner">
       <span>WBN Türkiye, Inspira7 tarafından desteklenmektedir.</span>
       <a href="https://inspira7.com/" target="_blank" rel="noopener noreferrer" aria-label="Inspira7">
-        <img class="footer-support-logo" src="<?= e(asset('img/inspira7.png')) ?>" alt="Inspira7 logosu">
+        <img class="footer-support-logo" src="<?= e(asset('img/inspira7.png')) ?>" alt="Inspira7 logosu" width="92" height="15" loading="lazy">
       </a>
     </div>
   </div>

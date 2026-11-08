@@ -52,6 +52,10 @@ try {
             require_admin();
             stream_receipt_file($m[1], isset($_GET['download']));
         }
+        if ($method === 'DELETE' && preg_match('#^/(applications|member-updates|corporate-applications|receipts)/([A-Z0-9-]+)$#', $path, $m)) {
+            require_admin(true);
+            $result = soft_delete_record($m[1], $m[2]);
+        }
         if ($method === 'POST' && preg_match('#^/(applications|corporate-applications)/([A-Z0-9-]+)/(approve|reject)$#', $path, $m)) {
             require_admin(true);
             $result = decide_application(

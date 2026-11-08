@@ -51,7 +51,7 @@ a{color:inherit;text-decoration:none}
   position:absolute;
   inset:0 0 0 42%;
   z-index:-2;
-  background:url("/assets/img/hero-banner-wbn.jpg") right center / contain no-repeat;
+  background:url("/assets/img/hero-banner-wbn.webp") right center / contain no-repeat;
 }
 .about-hero::before{
   content:"";

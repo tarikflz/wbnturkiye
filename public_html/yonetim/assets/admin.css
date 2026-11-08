@@ -318,6 +318,18 @@
       font-weight:700;
     }
     .view-btn:hover{background:#FBF6FD}
+    .row-actions{display:flex;gap:8px;flex-wrap:nowrap}
+    .delete-btn{
+      border:1px solid #E8C6CC;
+      background:#fff;
+      color:var(--red);
+      border-radius:11px;
+      padding:9px 13px;
+      font-size:12px;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .delete-btn:hover{background:#FDF3F5}
 
     .empty{
       padding:46px;

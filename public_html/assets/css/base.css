@@ -262,7 +262,7 @@ a { color: inherit; text-decoration: none; }
   gap: 14px;
   flex-wrap: wrap;
   color: rgba(255, 255, 255, .62);
-  font-size: 12px;
+  font-size:13px;
   text-align: center;
 }
 .footer-support-logo { width: 92px; height: auto; display: block; opacity: .95; }
@@ -271,6 +271,33 @@ a { color: inherit; text-decoration: none; }
   .container { width: min(calc(100% - 28px), var(--container)); }
   .footer-community { padding-top: 48px; }
 }
+
+/* ---------- İŞ BİRLİKLERİMİZ ---------- */
+.partners-section { padding: 64px 0; background: var(--white); text-align: center; }
+.partners-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px 40px;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.partner-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 140px;
+  height: 120px;
+  color: var(--purple-900);
+  font-size: 20px;
+  font-weight: 700;
+  opacity: .85;
+  transition: opacity .2s ease, transform .2s ease;
+}
+.partner-link:hover { opacity: 1; transform: translateY(-2px); }
+.partner-link img { width: 200px; max-width: 100%; height: 120px; object-fit: contain; }
 
 /* ---------- 404 ---------- */
 .not-found { padding: 120px 0; text-align: center; background: var(--off-white); }
@@ -325,3 +352,52 @@ a { color: inherit; text-decoration: none; }
 .form-success h3 { margin: 0 0 8px; color: var(--purple-950); font-family: "Playfair Display", serif; font-size: 26px; }
 .form-success p { margin: 0; color: var(--muted); }
 .hp-field { position: absolute !important; left: -10000px !important; width: 1px; height: 1px; overflow: hidden; }
+
+/* ---------- ERİŞİLEBİLİRLİK ---------- */
+/* Klavye odağı: yalnızca klavye kullanımında görünür */
+:focus-visible { outline: 3px solid var(--purple-600); outline-offset: 3px; }
+.site-header :focus-visible,
+.site-footer :focus-visible { outline-color: var(--purple-300); }
+input:focus-visible, select:focus-visible, textarea:focus-visible { outline-offset: 0; }
+
+/* İçeriğe geç: yalnızca odaklanınca görünür */
+.skip-link {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 1000;
+  padding: 12px 20px;
+  border-radius: 999px;
+  color: #fff;
+  background: var(--purple-800);
+  font-weight: 700;
+  transform: translateY(-200%);
+  transition: transform .15s ease;
+}
+.skip-link:focus { transform: none; }
+main:focus { outline: none; }
+
+.brand-logo { height: auto; }
+
+/* Form gönder butonları: ortak durumlar (sayfa CSS'lerindeki görünüm korunur) */
+.submit-button, .submit-btn { cursor: pointer; }
+.submit-button:active, .submit-btn:active { transform: translateY(0); }
+.submit-button:disabled, .submit-btn:disabled,
+.submit-button:disabled:hover, .submit-btn:disabled:hover,
+.submit-button[aria-busy="true"], .submit-btn[aria-busy="true"] {
+  opacity: .65;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Hareketi azalt tercihi */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .leader-card:hover, .leader-card:hover .leader-photo { transform: none; }
+}

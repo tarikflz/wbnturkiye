@@ -8,7 +8,7 @@ layout_start([
     'active' => 'kurucularimiz',
 ]);
 ?>
-<main>
+<main id="main" tabindex="-1">
   <section class="founders-hero">
     <div class="container">
       <div class="founders-eyebrow">WBN Türkiye</div>

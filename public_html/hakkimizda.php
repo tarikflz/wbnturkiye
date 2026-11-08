@@ -8,7 +8,7 @@ layout_start([
     'active' => 'hakkimizda',
 ]);
 ?>
-<main>
+<main id="main" tabindex="-1">
   <section class="about-hero">
     <div class="container">
       <div class="hero-copy">

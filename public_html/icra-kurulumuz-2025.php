@@ -4,7 +4,7 @@ require __DIR__ . '/_app.php';
 // Menüde linki yok; yalnızca İcra Kurulumuz sayfasındaki bağlantıdan erişilir.
 layout_start([
     'title' => 'WBN Türkiye | İcra Kurulumuz 2025',
-    'description' => 'WBN Türkiye İcra Kurulu 2025 üyeleri.',
+    'description' => 'WBN Türkiye İcra Kurulu 2025 üyeleri: topluluğumuzu geçen dönem birlikte yöneten kadın liderlerle tanışın.',
     'css' => ['pages/ekip'],
     'active' => 'icra-kurulu',
 ]);
@@ -21,7 +21,7 @@ $members = [
     ['Tulin Çakmak', '', 'https://www.linkedin.com/in/tulincakmak/', 'tulin-cakmak.jpg'],
 ];
 ?>
-<main>
+<main id="main" tabindex="-1">
   <section class="board-hero" data-year="2025">
     <div class="container">
       <div class="board-eyebrow">WBN Türkiye</div>

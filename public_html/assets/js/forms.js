@@ -49,6 +49,9 @@
     if (target) {
       target.style.display = 'block';
       target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      target.setAttribute('role', 'status');
+      target.tabIndex = -1;
+      target.focus({ preventScroll: true });
       return;
     }
     const box = document.createElement('div');
@@ -56,8 +59,10 @@
     box.setAttribute('role', 'status');
     box.innerHTML = '<div class="form-success__icon" aria-hidden="true">✓</div><h3>Teşekkür ederiz</h3><p></p>';
     box.querySelector('p').textContent = message;
+    box.tabIndex = -1;
     hide.insertAdjacentElement('afterend', box);
     box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    box.focus({ preventScroll: true });
   }
 
   document.querySelectorAll('form[data-api]').forEach(form => {
@@ -77,6 +82,7 @@
 
       if (button) {
         button.disabled = true;
+        button.setAttribute('aria-busy', 'true');
         button.textContent = 'Gönderiliyor...';
       }
 
@@ -99,6 +105,7 @@
 
       if (button) {
         button.disabled = false;
+        button.removeAttribute('aria-busy');
         button.textContent = label;
       }
     });

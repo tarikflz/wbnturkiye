@@ -32,7 +32,7 @@ With `mail.transport = 'log'`, emails are written to `wbn_app/storage/logs/mail.
 ## Deploying to cPanel
 
 1. **PHP:** cPanel → *Select PHP Version* → 8.1 or newer, with `pdo_mysql`, `fileinfo` and `mbstring` enabled.
-2. **Database:** cPanel → *MySQL Databases* → create a database and user and grant all privileges. Then phpMyAdmin → select the database → *Import* → `wbn_app/migrations/001_schema.sql`.
+2. **Database:** cPanel → *MySQL Databases* → create a database and user and grant all privileges. Then phpMyAdmin → select the database → *Import* → `wbn_app/migrations/001_schema.sql`. Then import `wbn_app/migrations/002_soft_delete.sql` (adds `deleted_at`/`deleted_by` columns used by the admin panel's delete button; run once).
 3. **Upload** `public_html/*` (including `.htaccess`) into `~/public_html` and `wbn_app/` to `~/wbn_app`. You can use cPanel *Git Version Control* or FTP.
 4. **Config:** copy `~/wbn_app/config.example.php` to `~/wbn_app/config.php` and fill in:
    - `db.*`: the database from step 2 (cPanel prefixes the names, e.g. `cpuser_wbn`).

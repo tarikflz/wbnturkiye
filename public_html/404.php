@@ -7,7 +7,7 @@ layout_start([
     'noindex' => true,
 ]);
 ?>
-<main class="not-found">
+<main id="main" tabindex="-1" class="not-found">
   <div class="container">
     <p class="not-found__code">404</p>
     <h1>Aradığınız sayfa bulunamadı.</h1>

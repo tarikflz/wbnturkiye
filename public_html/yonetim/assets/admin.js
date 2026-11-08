@@ -258,6 +258,7 @@ function exportApplicationsToExcel(){
       "Veri Tabanını Güncel Tutma Onayı": a.database_update_consent,
       "Ek Bilgi": a.extra_info || "",
       "Başvuru Durumu": statusLabel[a.status] || a.status,
+      "Karar Tarihi": a.decided_at ? formatDate(a.decided_at) : "",
       "Mail Durumu": a.email_status === "sent" ? "Gönderildi" : (a.email_status === "error" ? "Gönderim Hatası" : "Gönderilmedi")
     }));
 
@@ -402,7 +403,7 @@ function renderReceiptRows(){
       </td>
       <td>${esc(r.email || "-")}</td>
       <td><span class="status ${r.membership_status === "Yeni Üye" ? "approved" : "pending"}">${esc(r.membership_status || "-")}</span></td>
-      <td><button class="view-btn receipt-view-btn" data-id="${esc(r.id)}">Detaylı Gör</button></td>
+      <td><div class="row-actions"><button class="view-btn receipt-view-btn" data-id="${esc(r.id)}">Detaylı Gör</button><button class="delete-btn" data-delete="receipts" data-id="${esc(r.id)}">Sil</button></div></td>
     </tr>
   `).join("");
 
@@ -475,6 +476,7 @@ function exportCorporateToExcel(){
     "Telefon": a.phone,
     "E-posta Adresi": a.email,
     "Başvuru Durumu": statusLabel[a.status] || a.status,
+    "Karar Tarihi": a.decided_at ? formatDate(a.decided_at) : "",
     "Mail Durumu": a.email_status === "sent" ? "Gönderildi" : (a.email_status === "error" ? "Gönderim Hatası" : "Gönderilmedi")
   }));
   downloadExcel(data, "WBN_Turkiye_Kurumsal_Uye_Basvurulari.xlsx", "Kurumsal Başvurular");
@@ -500,7 +502,8 @@ function renderCorporateRows(){
       <td>${esc(a.applicant_title || "-")}</td>
       <td>${esc(a.email || "-")}</td>
       <td><span class="status ${statusClass(a.status)}">${statusLabel[a.status] || "Beklemede"}</span></td>
-      <td><button class="view-btn corporate-view-btn" data-id="${esc(a.id)}">Detaylı Gör</button></td>
+      <td>${a.decided_at ? formatDate(a.decided_at) : "-"}</td>
+      <td><div class="row-actions"><button class="view-btn corporate-view-btn" data-id="${esc(a.id)}">Detaylı Gör</button><button class="delete-btn" data-delete="corporate-applications" data-id="${esc(a.id)}">Sil</button></div></td>
     </tr>
   `).join("");
 
@@ -578,6 +581,7 @@ function refreshCorporateDecisionPanel(){
   } else {
     decisionText.textContent = "Henüz değerlendirilmedi";
   }
+  if(a.decided_at) decisionText.textContent += " · " + formatDate(a.decided_at);
 
   if(a.email_status === "sent"){
     mailStatus.textContent = "Gönderildi";
@@ -664,7 +668,8 @@ function renderRows(){
       <td>${esc(a.title || "-")}</td>
       <td>${esc(a.email || "-")}</td>
       <td><span class="status ${statusClass(a.status)}">${statusLabel[a.status] || "Beklemede"}</span></td>
-      <td><button class="view-btn" data-id="${esc(a.id)}">Detaylı Gör</button></td>
+      <td>${a.decided_at ? formatDate(a.decided_at) : "-"}</td>
+      <td><div class="row-actions"><button class="view-btn" data-id="${esc(a.id)}">Detaylı Gör</button><button class="delete-btn" data-delete="applications" data-id="${esc(a.id)}">Sil</button></div></td>
     </tr>
   `).join("");
 
@@ -704,7 +709,7 @@ function renderUpdateRows(){
       <td>${esc(a.title || "-")}</td>
       <td>${esc(a.email || "-")}</td>
       <td>${esc(a.company || "-")}</td>
-      <td><button class="view-btn update-view-btn" data-id="${esc(a.id)}">Detaylı Gör</button></td>
+      <td><div class="row-actions"><button class="view-btn update-view-btn" data-id="${esc(a.id)}">Detaylı Gör</button><button class="delete-btn" data-delete="member-updates" data-id="${esc(a.id)}">Sil</button></div></td>
     </tr>
   `).join("");
 
@@ -837,6 +842,7 @@ function refreshDecisionPanel(){
   }else{
     decisionText.textContent = "Henüz değerlendirilmedi";
   }
+  if(a.decided_at) decisionText.textContent += " · " + formatDate(a.decided_at);
 
   detailStatus.textContent = statusLabel[a.status];
   detailStatus.className = `status ${statusClass(a.status)}`;
@@ -903,6 +909,35 @@ async function rejectApplication(){
     refreshDecisionPanel();
   }
 }
+
+// Silme (soft delete): sunucuda kayıt gizlenir, listeden de kaldırılır.
+const DELETE_TARGETS = {
+  "applications": {label: "başvuruyu", remove: id => { applications = applications.filter(x => x.id !== id); renderRows(); }},
+  "member-updates": {label: "kaydı", remove: id => { memberUpdates = memberUpdates.filter(x => x.id !== id); renderUpdateRows(); }},
+  "corporate-applications": {label: "kurumsal başvuruyu", remove: id => { corporateApplications = corporateApplications.filter(x => x.id !== id); renderCorporateRows(); }},
+  "receipts": {label: "dekontu", remove: id => { receipts = receipts.filter(x => x.id !== id); renderReceiptRows(); }}
+};
+
+async function deleteRecord(kind, id){
+  const target = DELETE_TARGETS[kind];
+  if(!target || decisionBusy) return;
+  if(!window.confirm(`${id} numaralı ${target.label} silmek istediğinize emin misiniz?`)) return;
+  decisionBusy = true;
+  try{
+    await api(`/${kind}/${encodeURIComponent(id)}`, {method:"DELETE"});
+    target.remove(id);
+    showToast("Kayıt silindi.");
+  }catch(err){
+    showToast(err.message || "Silme işlemi başarısız.");
+  }finally{
+    decisionBusy = false;
+  }
+}
+
+document.addEventListener("click", e => {
+  const btn = e.target.closest("[data-delete]");
+  if(btn) deleteRecord(btn.dataset.delete, btn.dataset.id);
+});
 
 function showToast(message){
   toast.textContent = message;
