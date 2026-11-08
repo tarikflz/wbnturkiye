@@ -5,12 +5,14 @@ define('APP_DIR', __DIR__);
 define('TEMPLATES_DIR', APP_DIR . '/templates');
 define('STORAGE_DIR', APP_DIR . '/storage');
 
-if (!is_file(APP_DIR . '/config.php')) {
+// WBN_CONFIG ortam değişkeni ile farklı bir config dosyası seçilebilir (Docker bunu kullanır).
+$configFile = getenv('WBN_CONFIG') ?: APP_DIR . '/config.php';
+if (!is_file($configFile)) {
     http_response_code(500);
     exit('config.php bulunamadı. wbn_app/config.example.php dosyasını config.php olarak kopyalayın.');
 }
 
-$GLOBALS['config'] = require APP_DIR . '/config.php';
+$GLOBALS['config'] = require $configFile;
 
 function config(string $key, mixed $default = null): mixed
 {

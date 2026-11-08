@@ -14,6 +14,7 @@ Website for **WBN Türkiye** (a women's leadership network) in pure PHP 8.1+ and
 # Local server (the built-in server ignores .htaccess; dev-router.php imitates it)
 php -S localhost:8000 -t public_html dev-router.php
 
+# Alternative: docker compose up -d --build (http://localhost:8080, Apache + real .htaccess, config.docker.php via WBN_CONFIG)
 # Local DB (MariaDB via Homebrew): db wbn_local, user wbn / wbn_local_pw
 mariadb -u wbn -pwbn_local_pw wbn_local < wbn_app/migrations/001_schema.sql
 

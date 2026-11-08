@@ -1,0 +1,37 @@
+# Yerel test ortamı:  docker compose up -d --build   ->  http://localhost:8080
+# Kod bind mount ile bağlıdır; dosyaları değiştirince yeniden build gerekmez.
+services:
+  web:
+    build: .
+    ports:
+      - "8080:80"
+    environment:
+      WBN_CONFIG: /var/www/wbn_app/config.docker.php
+    volumes:
+      - ./public_html:/var/www/public_html
+      - ./wbn_app:/var/www/wbn_app
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mariadb:11
+    environment:
+      MARIADB_DATABASE: wbn_local
+      MARIADB_USER: wbn
+      MARIADB_PASSWORD: wbn_local_pw
+      MARIADB_ROOT_PASSWORD: root_local_pw
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      # Boş veritabanında migration'lar dosya adı sırasıyla otomatik çalışır
+      - ./wbn_app/migrations:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  db_data:

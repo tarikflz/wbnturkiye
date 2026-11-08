@@ -29,6 +29,16 @@ php -S localhost:8000 -t public_html dev-router.php
 
 With `mail.transport = 'log'`, emails are written to `wbn_app/storage/logs/mail.log` instead of being sent.
 
+## Local testing with Docker
+
+```bash
+docker compose up -d --build        # site: http://localhost:8080, MariaDB: localhost:3307
+docker compose exec web php wbn_app/bin/create-admin.php admin --apply   # asks for a password; admin panel at /yonetim/
+docker compose down                 # stop (add -v to also wipe the database)
+```
+
+The database is created from `wbn_app/migrations/*.sql` on first start. Settings come from `wbn_app/config.docker.php` (selected by the `WBN_CONFIG` variable; emails go to `wbn_app/storage/logs/mail.log`). Code is bind-mounted, so no rebuild is needed after edits. Apache runs the real `.htaccess`, so `dev-router.php` is not used.
+
 ## Deploying to cPanel
 
 1. **PHP:** cPanel → *Select PHP Version* → 8.1 or newer, with `pdo_mysql`, `fileinfo` and `mbstring` enabled.
