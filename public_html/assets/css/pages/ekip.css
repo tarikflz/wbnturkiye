@@ -14,7 +14,7 @@
   content:attr(data-year);
   position:absolute;
   right:-30px;
-  bottom:-72px;
+  bottom:-44px;
   font-family:"Playfair Display",serif;
   font-size:clamp(170px,23vw,340px);
   line-height:.8;
@@ -60,6 +60,8 @@
   align-items:stretch;
 }
 .leader-card{
+  display:flex;
+  flex-direction:column;
   position:relative;
   overflow:hidden;
   border:1px solid rgba(74,27,84,.09);
@@ -95,7 +97,7 @@
   transition:transform .4s ease;
 }
 .leader-card:hover .leader-photo{transform:scale(1.035)}
-.leader-content{padding:26px 26px 25px}
+.leader-content{display:flex;flex:1;flex-direction:column;padding:26px 26px 25px}
 .leader-name{
   margin:0;
   font-family:"Playfair Display",serif;
@@ -105,8 +107,7 @@
   letter-spacing:-.025em;
 }
 .leader-title{
-  min-height:52px;
-  margin:10px 0 0;
+  margin:10px 0 22px;
   color:var(--muted);
   font-size:13.5px;
   line-height:1.55;
@@ -115,11 +116,11 @@
   display:flex;
   align-items:center;
   justify-content:flex-end;
-  margin-top:22px;
+  margin-top:auto;
   padding-top:18px;
   border-top:1px solid rgba(74,27,84,.08);
 }
-.leader-footer--bare{margin-top:18px;padding-top:0;border-top:0}
+.leader-footer--bare{border-top:0}
 .linkedin-link{
   width:40px;
   height:40px;
@@ -177,7 +178,6 @@
   .leaders-section{padding:64px 0 84px}
   .leaders-grid{grid-template-columns:1fr;gap:28px}
   .leader-photo-wrap{height:430px}
-  .leader-title{min-height:0}
 }
 @media(max-width:450px){
   .leader-photo-wrap{height:360px}

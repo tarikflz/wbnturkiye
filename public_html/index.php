@@ -2,6 +2,7 @@
 require __DIR__ . '/_app.php';
 
 layout_start([
+    'footer_cta' => false, // sayfada zaten katılım çağrısı/form var
     'title' => 'WBN Türkiye | Güçlü Kadınlar, Güçlü Gelecek',
     'description' => 'WBN Türkiye; kadın liderleri ortak değerler, mentorluk, ilham ve etki etrafında buluşturan seçkin bir topluluktur.',
     'css' => ['pages/index'],

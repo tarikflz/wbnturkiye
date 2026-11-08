@@ -94,6 +94,7 @@ h1{
   font-size:18px;
 }
 .hero-note{
+  align-self:center;
   padding:34px 36px;
   border-radius:26px;
   background:rgba(255,255,255,.075);
@@ -102,6 +103,37 @@ h1{
 }
 .hero-note strong{display:block;margin-bottom:10px;font-size:19px}
 .hero-note p{margin:0;color:rgba(255,255,255,.72);font-size:15px}
+
+.hero-steps {
+  display: grid;
+  gap: 12px;
+  margin: 22px 0 0;
+  padding: 22px 0 0;
+  border-top: 1px solid rgba(255,255,255,.12);
+  list-style: none;
+  counter-reset: step;
+}
+.hero-steps li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: rgba(255,255,255,.88);
+  font-size: 14.5px;
+  counter-increment: step;
+}
+.hero-steps li::before {
+  content: counter(step);
+  flex: 0 0 auto;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(209,157,241,.22);
+  color: var(--purple-200);
+  font-size: 12px;
+  font-weight: 700;
+}
 
 .form-section{padding:76px 0 88px}
 .form-shell{

@@ -1,4 +1,5 @@
 <footer class="site-footer">
+<?php if (($page['footer_cta'] ?? true) !== false): ?>
   <div class="container footer-community">
     <p class="kicker">Topluluğa Katılın</p>
     <p class="lead">
@@ -6,6 +7,7 @@
     </p>
     <img class="footer-logo" src="<?= e(asset('img/wbn-logo.png')) ?>" alt="WBN Türkiye logosu" width="164" height="76" loading="lazy">
   </div>
+<?php endif; ?>
 
   <div class="container footer-social-only">
     <p class="footer-social-description">

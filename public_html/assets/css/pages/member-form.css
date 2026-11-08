@@ -102,7 +102,7 @@ h1 {
   font-size: 18px;
 }
 .hero-note {
-  align-self: stretch;
+  align-self: center;
   padding: 34px 36px;
   border-radius: 26px;
   background: rgba(255,255,255,.075);
@@ -122,6 +122,37 @@ h1 {
   margin: 0;
   color: rgba(255,255,255,.72);
   font-size: 15px;
+}
+
+.hero-steps {
+  display: grid;
+  gap: 12px;
+  margin: 22px 0 0;
+  padding: 22px 0 0;
+  border-top: 1px solid rgba(255,255,255,.12);
+  list-style: none;
+  counter-reset: step;
+}
+.hero-steps li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: rgba(255,255,255,.88);
+  font-size: 14.5px;
+  counter-increment: step;
+}
+.hero-steps li::before {
+  content: counter(step);
+  flex: 0 0 auto;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(209,157,241,.22);
+  color: var(--purple-200);
+  font-size: 12px;
+  font-weight: 700;
 }
 
 .form-section {
@@ -292,8 +323,8 @@ input:focus, select:focus, textarea:focus {
 }
 
 .choice-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0,1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   margin-top: 4px;
 }
@@ -301,11 +332,11 @@ input:focus, select:focus, textarea:focus {
   position: relative;
   display: flex;
   gap: 10px;
-  align-items: flex-start;
-  min-height: 48px;
-  padding: 12px 14px;
+  align-items: center;
+  min-height: 44px;
+  padding: 9px 16px;
   border: 1px solid rgba(74,27,84,.13);
-  border-radius: 13px;
+  border-radius: 999px;
   background: #fff;
   cursor: pointer;
   transition: border-color .2s ease, background .2s ease, transform .2s ease;
@@ -315,8 +346,13 @@ input:focus, select:focus, textarea:focus {
   background: #fffaff;
   transform: translateY(-1px);
 }
+.choice:has(input:checked) {
+  border-color: var(--purple-600);
+  background: var(--purple-100);
+}
+.choice:has(input:checked) span { color: var(--purple-900); font-weight: 600; }
 .choice input {
-  margin: 3px 0 0;
+  margin: 0;
   accent-color: #823FB1;
   flex: 0 0 auto;
 }
@@ -333,6 +369,7 @@ input:focus, select:focus, textarea:focus {
   border: 1px solid #eadbf1;
 }
 .kvkk-box .choice {
+  align-items: flex-start;
   background: transparent;
   border: 0;
   padding: 0;
@@ -376,7 +413,7 @@ input:focus, select:focus, textarea:focus {
   .page-hero { padding: 58px 0 50px; }
   .form-section { padding: 42px 0 58px; }
   .form-card { padding: 28px 20px; border-radius: 22px; }
-  .form-grid, .choice-grid { grid-template-columns: 1fr; }
+  .form-grid { grid-template-columns: 1fr; }
   .field.full { grid-column: auto; }
   .hero-note { padding: 24px; }
 }

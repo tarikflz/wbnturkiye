@@ -2,6 +2,7 @@
 require __DIR__ . '/_app.php';
 
 layout_start([
+    'footer_cta' => false, // sayfada zaten katılım çağrısı/form var
     'title' => 'WBN Türkiye | Üye Bilgi Güncelleme Formu',
     'description' => 'WBN Türkiye üyeleri için bilgi güncelleme formu: iletişim, kurum ve ilgi alanı bilgilerinizi güncel tutarak topluluktan haberdar olun.',
     'css' => ['pages/member-form'],

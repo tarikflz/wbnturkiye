@@ -2,6 +2,7 @@
 require __DIR__ . '/_app.php';
 
 layout_start([
+    'footer_cta' => false, // sayfada zaten katılım çağrısı/form var
     'title' => 'WBN Türkiye | Kurumsal Üyelik Başvuru Formu',
     'description' => 'WBN Türkiye kurumsal üyelik başvuru formu: kurumunuzun kadın liderlerle birlikte topluluğumuzun bir parçası olması için başvurun.',
     'css' => ['pages/kurumsal-uyelik'],
@@ -23,6 +24,11 @@ layout_start([
     <aside class="hero-note">
       <strong>Kurumsal başvurunuzu tamamlayın</strong>
       <p>Zorunlu alanları eksiksiz doldurun. Başvurunuz WBN Türkiye ekibine e-posta olarak iletilir.</p>
+      <ol class="hero-steps">
+        <li>Formu eksiksiz doldurun</li>
+        <li>Ekibimiz başvurunuzu değerlendirir</li>
+        <li>Sonuç e-posta ile size iletilir</li>
+      </ol>
     </aside>
   </div>
 </section>

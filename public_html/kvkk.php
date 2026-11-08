@@ -2,6 +2,7 @@
 require __DIR__ . '/_app.php';
 
 layout_start([
+    'footer_cta' => false, // sayfada zaten katılım çağrısı/form var
     'title' => 'WBN Türkiye | KVKK ve Gizlilik',
     'description' => 'WBN Türkiye KVKK ve Gizlilik Politikası: kişisel verilerinizin hangi amaçlarla işlendiği, saklandığı ve haklarınız hakkında bilgi.',
     'css' => ['pages/kvkk'],

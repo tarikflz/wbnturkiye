@@ -401,3 +401,6 @@ main:focus { outline: none; }
   }
   .leader-card:hover, .leader-card:hover .leader-photo { transform: none; }
 }
+
+/* Başlıklarda tek kelimelik yetim satırları önler */
+h1, h2, h3, .section-title { text-wrap: balance; }

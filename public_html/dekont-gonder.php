@@ -2,6 +2,7 @@
 require __DIR__ . '/_app.php';
 
 layout_start([
+    'footer_cta' => false, // sayfada zaten katılım çağrısı/form var
     'title' => 'WBN Türkiye | Dekont Gönderme Formu',
     'description' => 'WBN Türkiye Bağış Dekontu Gönderme Formu',
     'css' => ['pages/dekont-gonder'],
