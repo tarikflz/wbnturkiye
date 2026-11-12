@@ -15,7 +15,7 @@ const NAV_ITEMS = [
         'uye-bilgi-guncelleme' => ['/uye-bilgi-guncelleme', 'Üye Bilgi Güncelleme Formu'],
     ]],
     'etkinlikler' => [null, 'Etkinlikler', [
-        'yaklasan-etkinlikler' => [null, 'Yaklaşan Etkinlikler'],
+        'yaklasan-etkinlikler' => ['/yaklasan-etkinlikler', 'Yaklaşan Etkinlikler'],
         'gecmis-etkinlikler' => [null, 'Geçmiş Etkinlikler'],
     ]],
     'is-birlikleri' => ['/is-birliklerimiz', 'İş Birliklerimiz', [
