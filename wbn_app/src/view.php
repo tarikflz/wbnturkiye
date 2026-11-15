@@ -19,7 +19,6 @@ const NAV_ITEMS = [
         'gecmis-etkinlikler' => [null, 'Geçmiş Etkinlikler'],
     ]],
     'is-birlikleri' => ['/is-birliklerimiz', 'İş Birliklerimiz', [
-        'danismanlik' => [null, 'Uzman Danışmanlığı'], // yayına alınınca href: '/danismanlik'
         'wbn-ayricaliklari' => [null, 'WBN Ayrıcalıkları'],
     ]],
 ];
@@ -30,6 +29,13 @@ const PARTNERS = [
     ['Odarama', 'https://odarama.com/', '2_odarama.png'],
     ['Nodyo', 'https://nodyo.co/', '3_nodyo.png'],
 ];
+
+// Header'daki "Giriş Yap" butonu (uzman danışmanlığı). config.php → nodyo.show_login ile açılır;
+// kapalıyken buton görünmez ve /danismanlik sayfası arama motorlarına kapalıdır.
+function login_enabled(): bool
+{
+    return (bool) config('nodyo.show_login', false);
+}
 
 function e(?string $value): string
 {

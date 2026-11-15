@@ -8,7 +8,7 @@ layout_start([
     'css' => ['pages/member-form'],
     'js' => ['forms'],
     'active' => 'danismanlik',
-    'noindex' => true, // menüde pasif; yayına alınırken bu satırı kaldırın
+    'noindex' => !login_enabled(), // buton kapalıyken arama motorlarına da kapalı
 ]);
 ?>
 <section class="page-hero">

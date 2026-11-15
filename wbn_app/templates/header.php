@@ -36,6 +36,11 @@
 <?php endif; ?>
         </li>
 <?php endforeach; ?>
+<?php if (login_enabled()): ?>
+        <li class="site-nav__item site-nav__login">
+          <a class="site-nav__login-link<?= $active === 'danismanlik' ? ' is-active' : '' ?>" href="/danismanlik"<?= $active === 'danismanlik' ? ' aria-current="page"' : '' ?>>Giriş Yap</a>
+        </li>
+<?php endif; ?>
       </ul>
     </nav>
   </div>
