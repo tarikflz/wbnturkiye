@@ -70,7 +70,7 @@ Every form notifies the addresses in `config.php` → `notify.default` (wbnturki
 
 ## Nodyo integration
 
-`/nodyo` collects name + email, then emails a single-use link (30 min) to `/nodyo-giris`. The button there calls `POST /api/nodyo/continue`, which creates (or looks up) the user via Nodyo `POST /users`, then `POST /users/{id}/sso` and redirects the browser to the returned `redirect_url`. Email verification is required because `POST /users` returns the existing user for a known email. Code: `wbn_app/src/nodyo.php`. Admin: *Nodyo Üyeleri* tab; *Nodyo Görüşmeleri* is a placeholder until Nodyo provides a meetings API.
+`/danismanlik` (shown to users as WBN's own "Uzman Danışmanlığı" service; Nodyo is never named on the public pages) collects name + email, then emails a single-use link (30 min) to `/danismanlik-giris`. The button there calls `POST /api/danismanlik/continue`, which creates (or looks up) the user via Nodyo `POST /users`, then `POST /users/{id}/sso` and redirects the browser to the returned `redirect_url`. Email verification is required because `POST /users` returns the existing user for a known email. Code: `wbn_app/src/nodyo.php`. Admin: *Nodyo Üyeleri* tab; *Nodyo Görüşmeleri* is a placeholder until Nodyo provides a meetings API.
 
 Configure `nodyo` in `wbn_app/config.php` (never commit it): `base_url` (always `https://partner.nodyo.co/v1`; the dev key's results show up on the partnerstaging.nodyo.co site, the prod key's on nodyo.co) and `api_key`. `access_client_id` / `access_client_secret` are optional Cloudflare Access service-token headers and normally stay empty.
 

@@ -12,7 +12,7 @@ function nodyo_request(string $method, string $path, ?array $body = null): array
 {
     $key = (string) config('nodyo.api_key');
     if ($key === '') {
-        throw new HttpError(503, 'Nodyo bağlantısı henüz yapılandırılmadı.');
+        throw new HttpError(503, 'Hizmet henüz yapılandırılmadı.');
     }
 
     $headers = ['Accept: application/json', 'Content-Type: application/json', 'X-API-Key: ' . $key];
@@ -38,7 +38,7 @@ function nodyo_request(string $method, string $path, ?array $body = null): array
 
     if ($raw === false) {
         error_log("Nodyo $method $path ağ hatası: $err");
-        throw new HttpError(502, 'Nodyo ile bağlantı kurulamadı. Lütfen daha sonra tekrar deneyin.');
+        throw new HttpError(502, 'Hizmete bağlanılamadı. Lütfen daha sonra tekrar deneyin.');
     }
     $data = json_decode((string) $raw, true);
     if ($status >= 500 || ($status >= 400 && !in_array($status, [404, 409, 422], true))) {
@@ -124,11 +124,11 @@ function handle_nodyo_signup(array $input): array
             ->execute([$id, hash('sha256', $token), NODYO_TOKEN_TTL]);
 
         $name = $member['full_name'] ?? $d['full_name'];
-        $link = url('/nodyo-giris?token=' . $token);
-        send_mail([$email], 'WBN Türkiye | Nodyo Giriş Bağlantınız', mail_layout(
+        $link = url('/danismanlik-giris?token=' . $token);
+        send_mail([$email], 'WBN Türkiye | Giriş Bağlantınız', mail_layout(
             '<p>Merhaba ' . e($name) . ',</p>'
-            . '<p>Nodyo uzman görüşmelerine erişmek için aşağıdaki bağlantıyı kullanın. Bağlantı tek kullanımlıktır ve 30 dakika geçerlidir.</p>'
-            . '<p style="margin:24px 0"><a href="' . e($link) . '" style="background:#3A1044;color:#fff;padding:12px 22px;border-radius:999px;text-decoration:none;font-weight:bold">Nodyo\'ya Git</a></p>'
+            . '<p>Uzman danışmanlığı hizmetine erişmek için aşağıdaki bağlantıyı kullanın. Bağlantı tek kullanımlıktır ve 30 dakika geçerlidir.</p>'
+            . '<p style="margin:24px 0"><a href="' . e($link) . '" style="background:#3A1044;color:#fff;padding:12px 22px;border-radius:999px;text-decoration:none;font-weight:bold">Giriş Yap</a></p>'
             . '<p style="font-size:13px;color:#6F5D76">Bu talebi siz yapmadıysanız bu e-postayı yok sayabilirsiniz.</p>'
         ));
         if ($isNew) {
@@ -173,10 +173,10 @@ function handle_nodyo_continue(array $input): array
         if (!$userId) {
             [$status, $user] = nodyo_request('POST', '/users', ['email' => $member['email'], 'full_name' => $member['full_name']]);
             if ($status === 409) {
-                throw new HttpError(409, 'Bu e-posta adresiyle Nodyo\'da zaten bir hesap var. Lütfen doğrudan nodyo.co üzerinden giriş yapın.');
+                throw new HttpError(409, 'Bu e-posta adresiyle zaten bir hesap bulunuyor. Lütfen bizimle iletişime geçin.');
             }
             if (!in_array($status, [200, 201], true) || empty($user['id'])) {
-                throw new HttpError(502, 'Nodyo hesabı hazırlanamadı. Lütfen daha sonra tekrar deneyin.');
+                throw new HttpError(502, 'Hesabınız hazırlanamadı. Lütfen daha sonra tekrar deneyin.');
             }
             $userId = (string) $user['id'];
             $accountStatus = $user['account_status'] ?? null;
@@ -190,7 +190,7 @@ function handle_nodyo_continue(array $input): array
         [$status, $sso] = nodyo_request('POST', '/users/' . rawurlencode((string) $userId) . '/sso');
         $redirect = (string) ($sso['redirect_url'] ?? '');
         if ($status !== 200 || !str_starts_with($redirect, 'https://')) {
-            throw new HttpError(502, 'Nodyo girişi başlatılamadı. Lütfen daha sonra tekrar deneyin.');
+            throw new HttpError(502, 'Giriş başlatılamadı. Lütfen daha sonra tekrar deneyin.');
         }
     } catch (Throwable $e) {
         db()->prepare('UPDATE nodyo_login_tokens SET used_at = NULL WHERE token_hash = ?')->execute([$hash]);

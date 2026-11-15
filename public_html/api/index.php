@@ -35,8 +35,8 @@ try {
         $method === 'POST' && $path === '/member-updates' => handle_member_update(request_body()),
         $method === 'POST' && $path === '/corporate-applications' => handle_corporate_application(request_body()),
         $method === 'POST' && $path === '/receipts' => handle_receipt(request_body(), $_FILES['receipt'] ?? null),
-        $method === 'POST' && $path === '/nodyo/signup' => handle_nodyo_signup(request_body()),
-        $method === 'POST' && $path === '/nodyo/continue' => handle_nodyo_continue(request_body()),
+        $method === 'POST' && $path === '/danismanlik/signup' => handle_nodyo_signup(request_body()),
+        $method === 'POST' && $path === '/danismanlik/continue' => handle_nodyo_continue(request_body()),
         $method === 'POST' && $path === '/contact' => handle_contact(request_body()),
 
         // Admin: listeler

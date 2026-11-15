@@ -19,7 +19,7 @@ const NAV_ITEMS = [
         'gecmis-etkinlikler' => [null, 'Geçmiş Etkinlikler'],
     ]],
     'is-birlikleri' => ['/is-birliklerimiz', 'İş Birliklerimiz', [
-        'nodyo' => [null, 'Nodyo ile Uzman Görüşmesi'], // yayına alınınca href: '/nodyo'
+        'danismanlik' => [null, 'Uzman Danışmanlığı'], // yayına alınınca href: '/danismanlik'
         'wbn-ayricaliklari' => [null, 'WBN Ayrıcalıkları'],
     ]],
 ];
