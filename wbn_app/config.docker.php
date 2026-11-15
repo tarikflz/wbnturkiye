@@ -37,7 +37,7 @@ return [
         'access_client_id' => '',
         'access_client_secret' => '',
         // true: header'da "Giriş Yap" butonu görünür ve /danismanlik arama motorlarına açılır. Canlıya alırken true yapın.
-        'show_login' => false,
+        'show_login' => true,
     ],
 
     'links' => [
