@@ -73,3 +73,7 @@ Every form notifies the addresses in `config.php` → `notify.default` (wbnturki
 `/nodyo` collects name + email, then emails a single-use link (30 min) to `/nodyo-giris`. The button there calls `POST /api/nodyo/continue`, which creates (or looks up) the user via Nodyo `POST /users`, then `POST /users/{id}/sso` and redirects the browser to the returned `redirect_url`. Email verification is required because `POST /users` returns the existing user for a known email. Code: `wbn_app/src/nodyo.php`. Admin: *Nodyo Üyeleri* tab; *Nodyo Görüşmeleri* is a placeholder until Nodyo provides a meetings API.
 
 Configure `nodyo` in `wbn_app/config.php` (never commit it): `base_url` (always `https://partner.nodyo.co/v1`; the dev key's results show up on the partnerstaging.nodyo.co site, the prod key's on nodyo.co) and `api_key`. `access_client_id` / `access_client_secret` are optional Cloudflare Access service-token headers and normally stay empty.
+
+## Deploy with a zip (no Git on the server)
+
+`./scripts/build-deploy-zip.sh` lints the PHP files and writes `dist/wbn-deploy-<date>.zip` containing `wbnturkiye.com/` (web root) and `wbn_app/`. Upload it to the server's home directory and run `cd ~ && unzip -o wbn-deploy-*.zip`. The zip never contains `config.php` or `storage/`, so `unzip -o` cannot overwrite the server's settings, receipts or logs. Files deleted from the project are not removed from the server, and new SQL files in `wbn_app/migrations/` still have to be imported by hand. Override the folder names with `WEB_DIR` / `APP_DIR` if they differ.
