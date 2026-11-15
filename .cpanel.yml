@@ -1,0 +1,10 @@
+---
+# cPanel > Git Version Control > "Deploy HEAD Commit" bu dosyayı çalıştırır.
+# Repo sunucuda ayrı bir klasörde durur (örn. ~/repositories/wbn-turkey, web kökünün DIŞINDA);
+# aşağıdaki görevler içeriği gerçek klasörlere kopyalar. Her görev ayrı bir kabuktur, değişken paylaşılmaz.
+# Hedef klasör adları farklıysa iki satırdaki $HOME/... yollarını güncelleyin.
+# --delete kullanılmaz: sunucudaki config.php, storage/receipts ve storage/logs asla silinmez/ezilmez.
+deployment:
+  tasks:
+    - /bin/rsync -rlt --exclude='.DS_Store' public_html/ $HOME/wbnturkiye.com/
+    - /bin/rsync -rlt --exclude='.DS_Store' --exclude='config.php' --exclude='config.docker.php' --exclude='storage/receipts/' --exclude='storage/logs/' wbn_app/ $HOME/wbn_app/
