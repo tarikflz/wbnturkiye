@@ -42,6 +42,7 @@ try {
         $method === 'GET' && $path === '/member-updates' => admin_list('list_member_updates'),
         $method === 'GET' && $path === '/corporate-applications' => admin_list('list_corporate_applications'),
         $method === 'GET' && $path === '/receipts' => admin_list('list_receipts'),
+        $method === 'GET' && $path === '/mail-templates' => admin_list('list_mail_templates'),
 
         default => null,
     };
@@ -51,6 +52,10 @@ try {
         if ($method === 'GET' && preg_match('#^/receipts/([A-Z0-9-]+)/file$#', $path, $m)) {
             require_admin();
             stream_receipt_file($m[1], isset($_GET['download']));
+        }
+        if ($method === 'PUT' && preg_match('#^/mail-templates/([a-z_]+)$#', $path, $m)) {
+            require_admin(true);
+            $result = save_mail_template($m[1], request_body());
         }
         if ($method === 'DELETE' && preg_match('#^/(applications|member-updates|corporate-applications|receipts)/([A-Z0-9-]+)$#', $path, $m)) {
             require_admin(true);

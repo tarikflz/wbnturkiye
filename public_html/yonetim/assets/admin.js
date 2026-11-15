@@ -87,9 +87,11 @@ async function loadAll(){
   const state = document.getElementById("backendState");
   state.lastChild.textContent = " Veriler yükleniyor...";
   try{
-    [applications, memberUpdates, receipts, corporateApplications] = await Promise.all([
-      api("/applications"), api("/member-updates"), api("/receipts"), api("/corporate-applications")
+    [applications, memberUpdates, receipts, corporateApplications, mailTemplates] = await Promise.all([
+      api("/applications"), api("/member-updates"), api("/receipts"), api("/corporate-applications"), api("/mail-templates").catch(() => ({}))
     ]);
+    if(Array.isArray(mailTemplates)) mailTemplates = {};  // boş liste PHP'de [] döner
+    await migrateLocalMailTemplates();
     renderRows();
     renderUpdateRows();
     renderReceiptRows();
@@ -118,18 +120,46 @@ function saveMailEditorTemplate(editor){
     }
     return value;
   });
-  localStorage.setItem(editor.dataset.templateKey, JSON.stringify(values));
+  return saveMailTemplate(editor.dataset.templateKey, values);
+}
+
+// Şablonlar sunucuda saklanır; böylece tüm yöneticiler ve bilgisayarlar aynı içeriği görür.
+let mailTemplates = {};
+
+async function saveMailTemplate(key, values){
+  await api("/mail-templates/" + encodeURIComponent(key), {
+    method: "PUT",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({values})
+  });
+  mailTemplates[key] = values;
+}
+
+// Eski sürümde şablonlar tarayıcıya (localStorage) kaydediliyordu: sunucuda karşılığı yoksa bir kez sunucuya taşı.
+async function migrateLocalMailTemplates(){
+  for(const editor of document.querySelectorAll(".mail-editor")){
+    const key = editor.dataset.templateKey;
+    let stored = null;
+    try{ stored = localStorage.getItem(key); }catch(e){ return; }
+    if(!stored || mailTemplates[key]) continue;
+    try{
+      const values = JSON.parse(stored);
+      if(Array.isArray(values) && values.every(v => typeof v === "string")){
+        await saveMailTemplate(key, values);
+        localStorage.removeItem(key);
+      }
+    }catch(e){ console.warn("Yerel mail şablonu sunucuya taşınamadı.", e); }
+  }
 }
 
 function applyMailEditorTemplate(editorId, currentName){
   const editor = document.getElementById(editorId);
   if(!editor) return;
 
-  const stored = localStorage.getItem(editor.dataset.templateKey);
-  if(!stored) return;
+  const values = mailTemplates[editor.dataset.templateKey];
+  if(!Array.isArray(values)) return;
 
   try{
-    const values = JSON.parse(stored);
     const fields = [...editor.querySelectorAll('[data-mail-editable="true"]')];
     fields.forEach((el, index) => {
       if(values[index] === undefined) return;
@@ -157,11 +187,15 @@ function initMailEditors(){
       editableFields[0]?.focus();
     });
 
-    saveBtn.addEventListener("click", () => {
+    saveBtn.addEventListener("click", async () => {
       editableFields.forEach(el => el.removeAttribute("contenteditable"));
-      saveMailEditorTemplate(editor);
       editor.classList.remove("editing");
-      showToast("Mail içeriği kaydedildi.");
+      try{
+        await saveMailEditorTemplate(editor);
+        showToast("Mail içeriği kaydedildi.");
+      }catch(err){
+        showToast(err.message || "Mail içeriği kaydedilemedi.");
+      }
     });
   });
 }
