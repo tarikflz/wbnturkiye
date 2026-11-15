@@ -89,6 +89,29 @@ header('X-Robots-Tag: noindex, nofollow');
       <span class="nav-badge" id="corporateCount">0</span>
     </button>
 
+    <button class="nav-item nav-item-secondary" id="nodyoTab" style="margin-top:10px;">
+      <span class="nav-left">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8">
+            <circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M17 5.5a3 3 0 0 1 0 5M18 14.3c1.8.7 3 2.5 3 4.7"/>
+          </svg>
+        </span>
+        Nodyo Üyeleri
+      </span>
+      <span class="nav-badge" id="nodyoCount">0</span>
+    </button>
+
+    <button class="nav-item nav-item-secondary" id="nodyoMeetTab" style="margin-top:10px;">
+      <span class="nav-left">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="3" y="6" width="13" height="12" rx="2"/><path d="m16 10 5-3v10l-5-3"/>
+          </svg>
+        </span>
+        Nodyo Görüşmeleri
+      </span>
+    </button>
+
     <div class="sidebar-user">
       Oturum açan
       <strong><?= e($admin) ?></strong>
@@ -520,11 +543,53 @@ header('X-Robots-Tag: noindex, nofollow');
         </aside>
       </div>
     </section>
+    <section class="view" id="nodyoView">
+      <div class="page-top">
+        <div>
+          <h1>Nodyo Üyeleri</h1>
+          <p>wbnturkiye.com üzerinden Nodyo için kayıt olan kullanıcılar. E-posta doğrulaması yapılanlar Nodyo'ya giriş yapabilmiştir.</p>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg>
+          <input type="search" id="nodyoSearchInput" placeholder="Ad veya e-posta ara">
+        </div>
+      </div>
+      <div class="table-card">
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Kayıt Tarihi</th><th>Adı Soyadı</th><th>E-posta Adresi</th><th>E-posta Doğrulama</th>
+                <th>Nodyo Hesabı</th><th>Son Nodyo Girişi</th><th>Giriş Sayısı</th><th></th>
+              </tr>
+            </thead>
+            <tbody id="nodyoRows"></tbody>
+          </table>
+        </div>
+        <div class="empty" id="nodyoEmptyState">Kayıt bulunamadı.</div>
+      </div>
+    </section>
+
+    <section class="view" id="nodyoMeetView">
+      <div class="page-top">
+        <div>
+          <h1>Nodyo Görüşmeleri</h1>
+          <p>WBN Türkiye üyelerinin hangi Nody (uzman) ile görüştüğü burada listelenecek.</p>
+        </div>
+      </div>
+      <div class="table-card">
+        <div class="empty" style="display:block">Görüşme verisi henüz alınamıyor: Nodyo tarafından görüşme (kim kiminle) API'si sağlandığında bu bölüm doldurulacaktır.</div>
+      </div>
+    </section>
+
   </main>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script src="/yonetim/assets/admin.js?v=<?= filemtime(__DIR__ . '/assets/admin.js') ?>"></script>
+<script src="/yonetim/assets/nodyo-admin.js?v=<?= filemtime(__DIR__ . '/assets/nodyo-admin.js') ?>"></script>
 </body>
 </html>

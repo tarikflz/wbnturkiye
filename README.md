@@ -42,7 +42,7 @@ The database is created from `wbn_app/migrations/*.sql` on first start. Settings
 ## Deploying to cPanel
 
 1. **PHP:** cPanel → *Select PHP Version* → 8.1 or newer, with `pdo_mysql`, `fileinfo` and `mbstring` enabled.
-2. **Database:** cPanel → *MySQL Databases* → create a database and user and grant all privileges. Then phpMyAdmin → select the database → *Import* → `wbn_app/migrations/001_schema.sql`. Then import `wbn_app/migrations/002_soft_delete.sql` (adds `deleted_at`/`deleted_by` columns used by the admin panel's delete button; run once).
+2. **Database:** cPanel → *MySQL Databases* → create a database and user and grant all privileges. Then phpMyAdmin → select the database → *Import* → `wbn_app/migrations/001_schema.sql`. Then import `wbn_app/migrations/002_soft_delete.sql` (adds `deleted_at`/`deleted_by` columns used by the admin panel's delete button; run once). Then import `wbn_app/migrations/003_nodyo.sql` (Nodyo members and sign-in tokens) and `wbn_app/migrations/004_mail_templates.sql` (admin-edited approval/rejection email templates).
 3. **Upload** `public_html/*` (including `.htaccess`) into `~/public_html` and `wbn_app/` to `~/wbn_app`. You can use cPanel *Git Version Control* or FTP.
 4. **Config:** copy `~/wbn_app/config.example.php` to `~/wbn_app/config.php` and fill in:
    - `db.*`: the database from step 2 (cPanel prefixes the names, e.g. `cpuser_wbn`).
@@ -67,3 +67,9 @@ The database is created from `wbn_app/migrations/*.sql` on first start. Settings
 | `/yonetim/` | Admin panel (username and password login) |
 
 Every form notifies the addresses in `config.php` → `notify.default` (wbnturkiye@gmail.com, wbuzznetwork@gmail.com). Receipts go to `notify.receipts` (those two plus tulin.cakmak@novaformdan.com), with the file attached.
+
+## Nodyo integration
+
+`/nodyo` collects name + email, then emails a single-use link (30 min) to `/nodyo-giris`. The button there calls `POST /api/nodyo/continue`, which creates (or looks up) the user via Nodyo `POST /users`, then `POST /users/{id}/sso` and redirects the browser to the returned `redirect_url`. Email verification is required because `POST /users` returns the existing user for a known email. Code: `wbn_app/src/nodyo.php`. Admin: *Nodyo Üyeleri* tab; *Nodyo Görüşmeleri* is a placeholder until Nodyo provides a meetings API.
+
+Configure `nodyo` in `wbn_app/config.php` (never commit it): `base_url` (always `https://partner.nodyo.co/v1`; the dev key's results show up on the partnerstaging.nodyo.co site, the prod key's on nodyo.co) and `api_key`. `access_client_id` / `access_client_secret` are optional Cloudflare Access service-token headers and normally stay empty.

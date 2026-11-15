@@ -29,6 +29,15 @@ return [
         'default' => ['test@example.com'],
         'receipts' => ['test@example.com'],
     ],
+    // Nodyo Partner API. api_key'i yalnızca sunucudaki config.php'ye yazın, asla git'e eklemeyin.
+    // Staging: https://partner.nodyo.co/v1 (Cloudflare Zero Trust arkasında: gerekirse access_client_* servis token'ı).
+    'nodyo' => [
+        'base_url' => 'https://partner.nodyo.co/v1',
+        'api_key' => '',
+        'access_client_id' => '',
+        'access_client_secret' => '',
+    ],
+
     'links' => [
         'tev_donation' => 'https://bagis.tev.org.tr/burs-fonu-bagisi?q=67532&k=46004',
     ],

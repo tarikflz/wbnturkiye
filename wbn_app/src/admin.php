@@ -107,6 +107,22 @@ function list_receipts(): array
     ], $rows);
 }
 
+function list_nodyo_members(): array
+{
+    $rows = db()->query('SELECT * FROM nodyo_members WHERE deleted_at IS NULL ORDER BY created_at DESC, id DESC')->fetchAll();
+    return array_map(fn ($r) => [
+        'id' => $r['ref'],
+        'created_at' => iso_date($r['created_at']),
+        'full_name' => $r['full_name'],
+        'email' => $r['email'],
+        'nodyo_user_id' => $r['nodyo_user_id'],
+        'account_status' => $r['account_status'],
+        'email_verified_at' => iso_date($r['email_verified_at']),
+        'last_sso_at' => iso_date($r['last_sso_at']),
+        'sso_count' => (int) $r['sso_count'],
+    ], $rows);
+}
+
 /**
  * Kaydı siler (soft delete): satır ve dekont dosyası saklanır, yalnızca listelerden gizlenir.
  * $kind: 'applications' | 'member-updates' | 'corporate-applications' | 'receipts'
@@ -118,6 +134,7 @@ function soft_delete_record(string $kind, string $ref): array
         'member-updates' => 'member_updates',
         'corporate-applications' => 'corporate_applications',
         'receipts' => 'receipts',
+        'nodyo-members' => 'nodyo_members',
     ][$kind] ?? null;
     if ($table === null) {
         throw new HttpError(404, 'Bulunamadı.');

@@ -35,6 +35,8 @@ try {
         $method === 'POST' && $path === '/member-updates' => handle_member_update(request_body()),
         $method === 'POST' && $path === '/corporate-applications' => handle_corporate_application(request_body()),
         $method === 'POST' && $path === '/receipts' => handle_receipt(request_body(), $_FILES['receipt'] ?? null),
+        $method === 'POST' && $path === '/nodyo/signup' => handle_nodyo_signup(request_body()),
+        $method === 'POST' && $path === '/nodyo/continue' => handle_nodyo_continue(request_body()),
         $method === 'POST' && $path === '/contact' => handle_contact(request_body()),
 
         // Admin: listeler
@@ -43,6 +45,7 @@ try {
         $method === 'GET' && $path === '/corporate-applications' => admin_list('list_corporate_applications'),
         $method === 'GET' && $path === '/receipts' => admin_list('list_receipts'),
         $method === 'GET' && $path === '/mail-templates' => admin_list('list_mail_templates'),
+        $method === 'GET' && $path === '/nodyo-members' => admin_list('list_nodyo_members'),
 
         default => null,
     };
@@ -57,7 +60,7 @@ try {
             require_admin(true);
             $result = save_mail_template($m[1], request_body());
         }
-        if ($method === 'DELETE' && preg_match('#^/(applications|member-updates|corporate-applications|receipts)/([A-Z0-9-]+)$#', $path, $m)) {
+        if ($method === 'DELETE' && preg_match('#^/(applications|member-updates|corporate-applications|receipts|nodyo-members)/([A-Z0-9-]+)$#', $path, $m)) {
             require_admin(true);
             $result = soft_delete_record($m[1], $m[2]);
         }
